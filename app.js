@@ -28,6 +28,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+/**
+ * Render HTML from the points
+ */
 app.get("/", async (req, res, next) => {
   request.get(
     "https://dl.dropboxusercontent.com/s/8nvqnasci6l76nz/Problem.gpx",
@@ -65,7 +68,8 @@ app.get("/", async (req, res, next) => {
         elevation: elevation,
         speed: speed,
         time: time,
-        points: parsedPoint
+        points: parsedPoint,
+        APIKEY: process.env["G_API_KEY"]
       };
 
       return res.render("map", data);
